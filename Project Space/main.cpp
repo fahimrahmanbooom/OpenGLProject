@@ -35,10 +35,12 @@ void drawRocketLowerBody();
 void drawRocketFin();
 void drawHighExhaustFlame();
 void drawLowExhaustFlame();
+void drawRocketLeftWing();
+void drawRocketRightWing();
+void drawCircle(float xOrigin, float yOrigin, float radius, int red, int green, int blue);
 
 
-
-int numberOfSpaceObjects = 80;
+int numberOfSpaceObjects = 90;
 
 
 int main(int argc, char **argv) {
@@ -84,6 +86,13 @@ void display() {
     drawRocketFin();
     drawHighExhaustFlame();
     drawLowExhaustFlame();
+    drawRocketLeftWing();
+    drawRocketRightWing();
+    
+    drawCircle(400, 600, 70, 255, 255, 255);  // xOrigin, yOrigin, radius, red, green, blue   // white
+    drawCircle(-900, 800, 40, 186, 87, 62);   // xOrigin, yOrigin, radius, red, green, blue   // orange
+    drawCircle(1180, -800, 90, 171, 127, 93); // xOrigin, yOrigin, radius, red, green, blue   // brown
+    drawCircle(-600, -150, 20, 91, 93, 109);// xOrigin, yOrigin, radius, red, green, blue   // grey
     
     // display framebuffer on the screen
     glFlush();
@@ -329,6 +338,80 @@ void drawLowExhaustFlame() {
     glVertex2f(-650, -560); // left start
     glVertex2f(-600, -650); // mid end
     glVertex2f(-550, -560); // right start
+    
+    // end drawing
+    glEnd();
+}
+
+
+// draw rocket left wing
+void drawRocketLeftWing() {
+    // replaces the current matrix with the identity matrix (resets model view matrix)
+    glLoadIdentity();
+    
+    // begin drawing
+    glBegin(GL_POLYGON);
+    
+    // set content color
+    // redish
+    glColor3ub(237, 110, 105);
+    
+    // plot rocket left wing
+    glVertex2f(-665, -250); // left top start
+    glVertex2f(-790, -390); // left down start
+    glVertex2f(-790, -460); // left down end
+    glVertex2f(-665, -400); // left up end
+    
+    // end drawing
+    glEnd();
+}
+
+
+
+// draw rocket right wing
+void drawRocketRightWing() {
+    // replaces the current matrix with the identity matrix (resets model view matrix)
+    glLoadIdentity();
+    
+    // begin drawing
+    glBegin(GL_POLYGON);
+    
+    // set content color
+    // redish
+    glColor3ub(237, 110, 105);
+    
+    // plot rocket right wing
+    glVertex2f(-535, -250); // right top start
+    glVertex2f(-410, -390); // right down start
+    glVertex2f(-410, -460); // right down end
+    glVertex2f(-535, -400); // right up end
+    
+    // end drawing
+    glEnd();
+}
+
+
+
+// draw circle
+void drawCircle(float xOrigin, float yOrigin, float radius, int red, int green, int blue) {
+    
+    // replaces the current matrix with the identity matrix (resets model view matrix)
+    glLoadIdentity();
+    
+    // begin drawing
+    glBegin(GL_POLYGON);
+    
+    // set content color
+    // whiteish
+    glColor3ub(red, green, blue);
+    
+    for (int i = 0; i <= 360; i++) {
+        double angle = 2 * M_PI * i / 360;
+        double x = cos(angle) * radius;
+        double y = sin(angle) * radius;
+        // plot circle
+        glVertex2d(xOrigin + x, yOrigin + y);
+    }
     
     // end drawing
     glEnd();
