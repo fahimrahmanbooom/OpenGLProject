@@ -4,7 +4,6 @@
 //
 //  Created by Fahim Rahman on 20/3/22.
 //
-//  ID: 173-15-927 (PC-B)
 //
 
 #ifdef __APPLE__
@@ -38,9 +37,14 @@ void drawLowExhaustFlame();
 void drawRocketLeftWing();
 void drawRocketRightWing();
 void drawCircle(float xOrigin, float yOrigin, float radius, int red, int green, int blue);
+void drawSatelliteBody();
+void drawSatelliteDishHolder();
+void drawSatelliteDish(float xOrigin, float yOrigin, float radius, int red, int green, int blue);
+void drawSatelliteTopPanel();
+void drawSatelliteBottomPanel();
 
 
-int numberOfSpaceObjects = 90;
+int numberOfSpaceObjects = 80;
 
 
 int main(int argc, char **argv) {
@@ -92,7 +96,13 @@ void display() {
     drawCircle(400, 600, 70, 255, 255, 255);  // xOrigin, yOrigin, radius, red, green, blue   // white
     drawCircle(-900, 800, 40, 186, 87, 62);   // xOrigin, yOrigin, radius, red, green, blue   // orange
     drawCircle(1180, -800, 90, 171, 127, 93); // xOrigin, yOrigin, radius, red, green, blue   // brown
-    drawCircle(-600, -150, 20, 91, 93, 109);// xOrigin, yOrigin, radius, red, green, blue   // grey
+    drawCircle(-600, -150, 20, 91, 93, 109);// xOrigin, yOrigin, radius, red, green, blue     // grey
+    
+    drawSatelliteDishHolder();
+    drawSatelliteDish(760, 50, 18, 237, 110, 105);   // xOrigin, yOrigin, radius, red, green, blue   // red
+    drawSatelliteTopPanel();
+    drawSatelliteBottomPanel();
+    drawSatelliteBody();
     
     // display framebuffer on the screen
     glFlush();
@@ -406,7 +416,7 @@ void drawCircle(float xOrigin, float yOrigin, float radius, int red, int green, 
     glColor3ub(red, green, blue);
     
     for (int i = 0; i <= 360; i++) {
-        double angle = 2 * M_PI * i / 360;
+        double angle = 2 * M_PI * i / 100;
         double x = cos(angle) * radius;
         double y = sin(angle) * radius;
         // plot circle
@@ -416,3 +426,133 @@ void drawCircle(float xOrigin, float yOrigin, float radius, int red, int green, 
     // end drawing
     glEnd();
 }
+
+
+
+// draw satellite body
+void drawSatelliteBody() {
+    // replaces the current matrix with the identity matrix (resets model view matrix)
+    glLoadIdentity();
+    
+    // begin drawing
+    glBegin(GL_POLYGON);
+    
+    // set content color
+    // greyish
+    glColor3ub(200, 207, 224);
+    
+    // plot satellite body
+    glVertex2f(800, 100); // left top start
+    glVertex2f(800, 50); // left bottom end
+    glVertex2f(900, 100); // right bottom end
+    glVertex2f(900, 150); // right top start
+    
+    // end drawing
+    glEnd();
+}
+
+
+
+// draw satellite dish holder
+void drawSatelliteDishHolder() {
+    // replaces the current matrix with the identity matrix (resets model view matrix)
+    glLoadIdentity();
+    
+    // line width
+    glLineWidth(3);
+    
+    // begin drawing
+    glBegin(GL_LINES);
+    
+    // set content color
+    // blueish
+    glColor3ub(96, 179, 218);
+    
+    // plot satellite dish holder
+    glVertex2f(770, 60); // start
+    glVertex2f(800, 75); // end
+    
+    // end drawing
+    glEnd();
+}
+
+
+
+// draw satellite dish
+void drawSatelliteDish(float xOrigin, float yOrigin, float radius, int red, int green, int blue) {
+    
+    // replaces the current matrix with the identity matrix (resets model view matrix)
+    glLoadIdentity();
+    
+    // begin drawing
+    glBegin(GL_POLYGON);
+    
+    // set content color
+    // whiteish
+    glColor3ub(red, green, blue);
+    
+    for (int i = 0; i <= 50; i++) {
+        double angle = 2 * M_PI * i / 100;
+        double x = cos(angle) * radius;
+        double y = sin(angle) * radius;
+        // plot circle
+        glVertex2d(xOrigin + x, yOrigin + y);
+    }
+    
+    // end drawing
+    glEnd();
+}
+
+
+
+// draw satellite top panel
+void drawSatelliteTopPanel() {
+    // replaces the current matrix with the identity matrix (resets model view matrix)
+    glLoadIdentity();
+    
+    // begin drawing
+    glBegin(GL_POLYGON);
+    
+    // set content color
+    // blueish
+    glColor3ub(60, 119, 188);
+    
+    // plot satellite panel body
+    glVertex2f(840, 195); // top left start
+    glVertex2f(870, 210); // top right start
+    glVertex2f(870, 135); // top right end
+    glVertex2f(840, 120); // top left end
+    
+    // end drawing
+    glEnd();
+}
+
+
+
+
+// draw satellite bottom panel
+void drawSatelliteBottomPanel() {
+    // replaces the current matrix with the identity matrix (resets model view matrix)
+    glLoadIdentity();
+    
+    // begin drawing
+    glBegin(GL_POLYGON);
+    
+    // set content color
+    // blueish
+    glColor3ub(60, 119, 188);
+    
+    // plot satellite panel body
+    glVertex2f(840, 125); // top left start
+    glVertex2f(870, 140); // top right start
+    glVertex2f(870, 35); // top right end
+    glVertex2f(840, 20); // top left end
+    
+    // end drawing
+    glEnd();
+}
+
+
+
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
