@@ -20,6 +20,8 @@
 
 void display();
 void reshape(int, int);
+void timer(int);
+
 int generateRandomDigit();
 
 void generateSpaceObjects(int);
@@ -45,6 +47,7 @@ void drawSatelliteBottomPanel();
 
 
 int numberOfSpaceObjects = 80;
+int rocketSpeed = 7;           // select 4 to 20  :D :D
 
 
 int main(int argc, char **argv) {
@@ -56,6 +59,8 @@ int main(int argc, char **argv) {
     glutCreateWindow("Space");
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
+    // registers a timer callback to be triggered in a specified number of milliseconds
+    glutTimerFunc(1000, timer, 0);
     glClearColor(0, 0, 0, 0);
     glutMainLoop();
     
@@ -92,6 +97,7 @@ void display() {
     drawLowExhaustFlame();
     drawRocketLeftWing();
     drawRocketRightWing();
+    
     
     drawCircle(400, 600, 70, 255, 255, 255);  // xOrigin, yOrigin, radius, red, green, blue   // white
     drawCircle(-900, 800, 40, 186, 87, 62);   // xOrigin, yOrigin, radius, red, green, blue   // orange
@@ -552,6 +558,16 @@ void drawSatelliteBottomPanel() {
     glEnd();
 }
 
+
+
+// timer function
+void timer(int) {
+    // marks the current window as needing to be redisplayed
+    glutPostRedisplay();
+    
+    // registers a timer callback to be triggered in a specified number of milliseconds
+    glutTimerFunc(1000/rocketSpeed, timer, 0);
+}
 
 
 
