@@ -22,7 +22,8 @@ void display();
 void reshape(int, int);
 void timer(int);
 
-int generateRandomDigit();
+int generateRandomDigitForSpaceObject();
+int generateRandomDigitForSpeed();
 
 void generateSpaceObjects(int);
 void drawDistantObjects(float);
@@ -46,8 +47,7 @@ void drawSatelliteTopPanel();
 void drawSatelliteBottomPanel();
 
 
-int numberOfSpaceObjects = 80;
-int rocketSpeed = 7;           // select 4 to 20  :D :D
+int numberOfSpaceObjects = 70;
 
 
 int main(int argc, char **argv) {
@@ -119,13 +119,13 @@ void display() {
 void generateSpaceObjects(int numberOfSpaceObjects) {
     // plot space objects at random range
     for (int i = 0; i < numberOfSpaceObjects; i++) {
-        glVertex2d(generateRandomDigit(), generateRandomDigit());
+        glVertex2d(generateRandomDigitForSpaceObject(), generateRandomDigitForSpaceObject());
     }
 }
 
 
 // generate random digit between 0 and 1200
-int generateRandomDigit() {
+int generateRandomDigitForSpaceObject() {
     return -1200 + ( std::rand() % ( 1200 - (-1200) + 1 ) );
 }
 
@@ -560,14 +560,24 @@ void drawSatelliteBottomPanel() {
 
 
 
+
+// generate random digit between 2 and 10
+int generateRandomDigitForSpeed() {
+    return 4 + ( std::rand() % ( 10 - (4) + 1 ) );
+}
+
+
+
+
 // timer function
 void timer(int) {
     // marks the current window as needing to be redisplayed
     glutPostRedisplay();
     
     // registers a timer callback to be triggered in a specified number of milliseconds
-    glutTimerFunc(1000/rocketSpeed, timer, 0);
+    glutTimerFunc(1000 / generateRandomDigitForSpeed(), timer, 0); // 4 to 10 frame per second
 }
+
 
 
 
